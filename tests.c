@@ -14,43 +14,6 @@ void test_tutorial(void)
     free(mem);
 }
 
-void
-test_fail(void)
-{
-    int a, b;
-
-    /* This condition is designed to fail so you can see how the failed test
-     * output looks like. */
-    a = 1;
-    b = 2;
-    TEST_CHECK(a + b == 5);
-
-    /* Also show TEST_CHECK_ in action */
-    TEST_CHECK_(a + b == 5, "%d + %d == 5", a, b);
-
-    /* We may also show more information about the failure. */
-    if(!TEST_CHECK(a + b == 5)) {
-        TEST_MSG("a: %d", a);
-        TEST_MSG("b: %d", b);
-    }
-
-    /* The macros TEST_MSG() do write down something only when the precedin
-     * condition fails, so we can avoid the 'if'. */
-    TEST_CHECK(a + b == 3);
-    TEST_MSG("a: %d", a);
-    TEST_MSG("b: %d", b);
-}
-
-void
-test_crash(void)
-{
-    int* invalid = ((int*)NULL) + 0xdeadbeef;
-
-    *invalid = 42;
-    TEST_CHECK_(1 == 1, "We should never get here, due to the write into "
-                        "the invalid address.");
-}
-
 void test_output(void)
 {
 	FILE *fp = fopen("foo", "wb");
@@ -61,8 +24,6 @@ void test_output(void)
 
 TEST_LIST = {
     { "tutorial", test_tutorial },
-    { "fail",     test_fail },
-    { "output",   test_output },
-    { "crash",    test_crash },
+    { "output",    test_output },
     { NULL, NULL }
 };

@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    docker:
+            - image: ubuntu:1910
+    steps:
+      - checkout
+      - run:
+          name: Install tools
+          command: apt-get update && apt-get -y install gcc-aarch64-linux-gnu make qemu-user 
+
+      - run:
+          name: Build
+          command: make CC=aarch64-linux-gnu-gcc
+      - run:
+          name: Test
+          command: qemu-aarch64 ./tests
+      - store_artifacts:
+          path: tests
