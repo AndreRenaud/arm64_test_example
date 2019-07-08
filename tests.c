@@ -1,3 +1,5 @@
+#include <sys/utsname.h>
+
 #include "acutest.h"
 
 
@@ -21,9 +23,17 @@ void test_output(void)
 	fclose(fp);
 }
 
+void test_aarch64(void)
+{
+	struct utsname name;
+	uname(&name);
+	TEST_CHECK(strcmp(name.machine, "aarch64") == 0);
+}
+
 
 TEST_LIST = {
     { "tutorial", test_tutorial },
     { "output",    test_output },
+    { "aarch64", test_aarch64 },
     { NULL, NULL }
 };
